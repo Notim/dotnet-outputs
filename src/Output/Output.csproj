@@ -1,18 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageId>Outputs</PackageId>
-        <Title> Outputs</Title>
+        <PackageId>Notim.Outputs</PackageId>
+        <Title> Notim.Outputs</Title>
         <Authors>Notim</Authors>
         <Description>basic wrapper to use case Outputs response</Description>
-        <PackageProjectUrl>github.com</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/Notim/dotnet-outputs</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Notim/dotnet-outputs</RepositoryUrl>
         <RepositoryType>Github</RepositoryType>
         <PackageTags>wrapper, UseCase, Outputs</PackageTags>
+        <AssemblyName>Notim.Outputs</AssemblyName>
+        <RootNamespace>Notim.Outputs</RootNamespace>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <LangVersion>default</LangVersion>
+        <Version>1.0.1</Version>
     </PropertyGroup>
 
 </Project>

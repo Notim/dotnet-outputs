@@ -1,4 +1,4 @@
-namespace Output;
+namespace Notim.Outputs;
 
 public enum ErrorType
 {

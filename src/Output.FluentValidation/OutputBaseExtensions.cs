@@ -1,7 +1,8 @@
-﻿using FluentValidation.Results;
-using Output.Exceptions;
+﻿using System.Linq;
+using FluentValidation.Results;
+using Notim.Outputs.Exceptions;
 
-namespace Output.FluentValidation;
+namespace Notim.Outputs.FluentValidation;
 
 public static class OutputBaseExtensions
 {

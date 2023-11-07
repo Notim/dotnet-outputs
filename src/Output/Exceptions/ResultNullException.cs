@@ -1,6 +1,7 @@
+using System;
 using System.Runtime.Serialization;
 
-namespace Output.Exceptions;
+namespace Notim.Outputs.Exceptions;
 
 [Serializable]
 public class ResultNullException : Exception

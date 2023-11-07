@@ -1,6 +1,7 @@
-﻿using Output.Exceptions;
+﻿using System.Collections.Generic;
+using Notim.Outputs.Exceptions;
 
-namespace Output;
+namespace Notim.Outputs;
 
 public class Output<T>
 {

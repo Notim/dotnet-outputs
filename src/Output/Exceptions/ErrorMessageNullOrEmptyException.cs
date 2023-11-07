@@ -1,6 +1,7 @@
+using System;
 using System.Runtime.Serialization;
 
-namespace Output.Exceptions;
+namespace Notim.Outputs.Exceptions;
 
 /// <summary>
 /// Classe que encapsula erros para o campo de erros no pacote.

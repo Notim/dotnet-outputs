@@ -1,4 +1,4 @@
-namespace Output;
+namespace Notim.Outputs;
 
 public static class OutputConstants
 {

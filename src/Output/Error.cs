@@ -1,6 +1,7 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Output;
+namespace Notim.Outputs;
 
 [ExcludeFromCodeCoverage]
 public readonly struct Error : IEquatable<Error>
