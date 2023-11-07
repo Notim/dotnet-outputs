@@ -1,5 +1,7 @@
 # Outputs
 
+![example event parameter](https://github.com/Notim/dotnet-outputs/actions/workflows/dotnet.yml/badge.svg?event=push)
+
 This is a Basic Wrapper for use case Outputs, commom used with Mediatr Output or CQRS Patterns
 
 you can use in your project by [nuget.org](https://www.nuget.org/packages/Notim.Outputs/)
