@@ -2,11 +2,11 @@
 
 This is a Basic Wrapper for use case Outputs, commom used with Mediatr Output or CQRS Patterns
 
-get in [nuget](https://www.nuget.org/packages/Notim.Outputs/)
+you can use in your project by [nuget.org](https://www.nuget.org/packages/Notim.Outputs/)
 
 you can install with nuget package manager
 ```shell
-dotnet add package Notim.Outputs
+dotnet add package Notim.Outputs --version 2.0.0
 ```
 
 the usage is very simple, you only need to instace Output with classe that you need to transport.
@@ -33,17 +33,21 @@ you have the functionality to determine the error type to filter if you want to 
 example:
 
 ```csharp
-[...]
+[... useCaseImplementations ...]
 
 var output = new Output<ClassThatYouNeedToTransport>();
 
-if (something is notGood because external service is offline)
+if (something is notGood && externalServiceIsOffline)
 {
-  output.AddError(new Error(ErrorType.ExternalServiceUnavailable, "something is not good"));
+  output.AddError(new Error(ErrorType.ExternalServiceUnavailable, "customer service is down"));
 }
-else if (something is notGood because you dont find result on database)
+else if (something is notGood && cannotFindResultOnDatabase)
 {
-  output.AddError(new Error(ErrorType.ResourceNotFound, "something is not good"));
+  output.AddError(new Error(ErrorType.ResourceNotFound, "the user with id xxx cannot be find"));
+}
+else if (something is notGood && invalidInputReceived)
+{
+  output.AddError(new Error(ErrorType.InvalidInput, "invalid fields"));
 }
 else
 {
@@ -52,43 +56,46 @@ else
 }
 
 return output;
-[...]
 
+[... useCaseImplementations ...]
 ```
 
-controller:
+controller using use case pattern:
 
 ```csharp
 [HttpGet("/")]
-public async Task<IActionResult> GetOrder(ClassThatYouNeedToTransport input, CancelationToken cancelationToken)
+public async Task<IActionResult> GetOrder(ClassThatYouReceiveDataInput input, CancelationToken cancelationToken)
 
-  var output = await _usecase.Execute(input, cancelationToken);
+  Output<ClassThatYouNeedToTransport> output = await _findUserByIdUseCase.Handle(input, cancelationToken);
   
   if (!output.IsValid && output.Error.ErrorType is ErrorType.ExternalServiceUnavailable)
     return BadGateway(output.ErrorMessages);
   
   if (!output.IsValid && output.Error.ErrorType is ErrorType.ResourceNotFound)
     return NotFound(output.ErrorMessages);
+
+  if (!output.IsValid && output.Error.ErrorType is ErrorType.InvalidInput)
+    return UnprocessableEntity(output.ErrorMessages);
   
   return Ok(output.GetResult());
 }
 ```
-
+  
 After version 2 you can use the single line Build Form to create Output
 
 success use case output
 ```csharp
-var output = Output<ObjectThatYouWantToReturn>.WithSuccess(message, new ObjectThatYouWantToReturn());
+var output = Output<ClassThatYouNeedToTransport>.WithSuccess("use case finished with success", new ClassThatYouNeedToTransport());
 ```
 
 error use case output
 ```csharp
-var output = Output<ObjectThatYouWantToReturn>.WithError(errorMessage);
+var output = Output<ClassThatYouNeedToTransport>.WithError("An error was ocurred");
 ```
 
 error object use case output
 ```csharp
-var output = Output<ObjectThatYouWantToReturn>.WithError(new Error(ErrorType.ExternalServiceUnavailable, errorMessage));
+var output = Output<ClassThatYouNeedToTransport>.WithError(new Error(ErrorType.ExternalServiceUnavailable, "external service is unavaiable"));
 ```
 
 ## Contribution
