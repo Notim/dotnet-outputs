@@ -2,8 +2,14 @@
 
 this is a Basic wrapper for use case Outputs, commom used with Mediatr Output
 
-the usage is very simple, you only need to instace Output with classe that you need to transport.
+get in [nuget](https://www.nuget.org/packages/Notim.Outputs/)
 
+you can install with nuget package manager
+```śhell
+dotnet add package Notim.Outputs --version 1.0.2
+```
+
+the usage is very simple, you only need to instace Output with classe that you need to transport.
 ```csharp
 var output = new Output<ClassThatYouNeedToTransport>();
 
