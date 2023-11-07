@@ -5,9 +5,9 @@ namespace Notim.Outputs;
 /// </summary>
 public enum ErrorType
 {
-    InvalidInput,
-    Duplicity,
-    ExternalServiceUnavailable,
-    ResourceNotFound,
-    GenericError,
+    InvalidInput,               // 422, 400           - not retryable
+    Duplicity,                  // 409                - not retryable
+    ExternalServiceUnavailable, // 502, 503           - retryable
+    ResourceNotFound,           // 404, 204           - retryable / not retryable (Depends of implementation)
+    GenericError                // 400, 502, 503, 504 - retryable
 }

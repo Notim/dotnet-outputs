@@ -9,20 +9,18 @@ public static class OutputBaseExtensions
     
     public static void AddValidationResult<T>(this Output<T> output, ValidationResult validationResult)
     {
-        var errors = validationResult.Errors.Select<ValidationFailure, string>(e => e.ErrorMessage).ToList<string>();
-            
-        output.AddErrorMessages(errors.ToArray());
+        if (validationResult is null)
+            throw new ValidationResultNullException(OutputConstants.ValidationResultNullMessage);
         
-        output.AddError(new Error(ErrorType.InvalidInput, output.FormatErrorMessages()));
+        var errors = validationResult.Errors.Select<ValidationFailure, string>(e => $"{e.PropertyName} => {e.ErrorMessage}").ToList<string>();
+        
+        output.AddError(new Error(ErrorType.InvalidInput, string.Join(",", errors)));
     }
     
-    private static void AddValidationResults<T>(this Output<T> output, params ValidationResult[] validationResults)
+    public static void AddValidationResults<T>(this Output<T> output, params ValidationResult[] validationResults)
     {
         foreach (var validationResult in validationResults)
         {
-            if (validationResult is null)
-                throw new ValidationResultNullException(OutputConstants.ValidationResultNullMessage);
-
             output.AddValidationResult(validationResult);
         }
     }

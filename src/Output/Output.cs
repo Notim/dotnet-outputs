@@ -64,7 +64,7 @@ public class Output<T>
     /// <param name="error">Error with error type with more details</param>
     public void AddError(Error error)
     {
-        AddErrorMessages(error.ErrorMessage);
+        AddErrorMessages(error.ErrorMessage.Split(","));
         Error = error;
 
         VerifyValidity();

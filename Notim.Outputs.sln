@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Output.FluentValidation.UnitTests", "tests\Output.FluentValidation.UnitTests\Output.FluentValidation.UnitTests.csproj", "{137AA58D-6D21-4483-A9F5-388DFEC1A721}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,10 +35,15 @@ Global
 		{AF0FB7B0-61FB-45BD-AB84-0857417821AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF0FB7B0-61FB-45BD-AB84-0857417821AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF0FB7B0-61FB-45BD-AB84-0857417821AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{137AA58D-6D21-4483-A9F5-388DFEC1A721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{137AA58D-6D21-4483-A9F5-388DFEC1A721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{137AA58D-6D21-4483-A9F5-388DFEC1A721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{137AA58D-6D21-4483-A9F5-388DFEC1A721}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9238E394-69D8-479F-8671-307D71C06006} = {F19EF031-F2F9-489D-8E83-F42F0A6B43B6}
 		{FAFBC75E-3418-4786-A75E-486692D653BD} = {F19EF031-F2F9-489D-8E83-F42F0A6B43B6}
 		{AF0FB7B0-61FB-45BD-AB84-0857417821AF} = {58E671A2-A469-4529-9976-989615BF53A3}
+		{137AA58D-6D21-4483-A9F5-388DFEC1A721} = {58E671A2-A469-4529-9976-989615BF53A3}
 	EndGlobalSection
 EndGlobal
