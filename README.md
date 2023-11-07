@@ -1,7 +1,8 @@
 # Notim.Outputs
 
 ![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
-![example event parameter](https://github.com/Notim/dotnet-outputs/actions/workflows/dotnet.yml/badge.svg?event=push)
+![Tests passed](https://github.com/Notim/dotnet-outputs/actions/workflows/dotnet.yml/badge.svg?event=push)
+![NuGet Downloads](https://img.shields.io/nuget/dt/Notim.Outputs.svg)
 
 This is a Basic Wrapper for use case Outputs, commom used with Mediatr Output or CQRS Patterns
 
