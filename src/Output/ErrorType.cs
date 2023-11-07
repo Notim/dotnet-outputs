@@ -7,5 +7,4 @@ public enum ErrorType
     ExternalServiceUnavailable,
     ResourceNotFound,
     GenericError,
-    
 }

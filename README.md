@@ -1,6 +1,6 @@
 # Outputs
 
-this is a Basic wrapper for use case Outputs, commom used with Mediatr Output
+This is a Basic wrapper for use case Outputs, commom used with Mediatr Output
 
 get in [nuget](https://www.nuget.org/packages/Notim.Outputs/)
 
@@ -69,4 +69,13 @@ public async Task<IActionResult> GetOrder(ClassThatYouNeedToTransport input, Can
 }
 ```
 
-some issues you can talk with me paulino.joaovitor@yahoo.com.br
+## Contribution
+
+If you would like to contribute to this project, follow these steps:
+
+2. Create a branch for your changes (`git checkout -b feature/MyFeature`)
+3. Commit your changes (`git commit -am 'Add a feature'`)
+4. Push to the branch (`git push origin feature/MyFeature`)
+5. Open a Pull Request
+
+some issues you can talk with me [paulino.joaovitor@yahoo.com.br](mailto:paulino.joaovitor@yahoo.com.br)

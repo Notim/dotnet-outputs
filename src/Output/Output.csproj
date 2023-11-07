@@ -12,9 +12,9 @@
         <PackageTags>wrapper, UseCase, Outputs</PackageTags>
         <AssemblyName>Notim.Outputs</AssemblyName>
         <RootNamespace>Notim.Outputs</RootNamespace>
-        <TargetFramework>netstandard2.1</TargetFramework>
         <LangVersion>default</LangVersion>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
+        <TargetFrameworks>net7.0;net6.0;net5.0;netstandard2.1</TargetFrameworks>
     </PropertyGroup>
 
 </Project>
