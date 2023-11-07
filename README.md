@@ -1,16 +1,18 @@
 # Outputs
 
-This is a Basic wrapper for use case Outputs, commom used with Mediatr Output
+This is a Basic Wrapper for use case Outputs, commom used with Mediatr Output or CQRS Patterns
 
 get in [nuget](https://www.nuget.org/packages/Notim.Outputs/)
 
 you can install with nuget package manager
-```śhell
-dotnet add package Notim.Outputs --version 1.0.2
+```shell
+dotnet add package Notim.Outputs
 ```
 
 the usage is very simple, you only need to instace Output with classe that you need to transport.
 ```csharp
+[...]
+
 var output = new Output<ClassThatYouNeedToTransport>();
 
 if (something is notGood) {
@@ -22,6 +24,8 @@ else{
 }
 
 return output;
+
+[...]
 ```
 
 you have the functionality to determine the error type to filter if you want to return a especific status code or retries on your topic consumers;
@@ -29,7 +33,7 @@ you have the functionality to determine the error type to filter if you want to 
 example:
 
 ```csharp
-...
+[...]
 
 var output = new Output<ClassThatYouNeedToTransport>();
 
@@ -48,9 +52,10 @@ else
 }
 
 return output;
-...
+[...]
 
 ```
+
 controller:
 
 ```csharp
@@ -69,12 +74,29 @@ public async Task<IActionResult> GetOrder(ClassThatYouNeedToTransport input, Can
 }
 ```
 
+After version 2 you can use the single line Build Form to create Output
+
+success use case output
+```csharp
+var output = Output<ObjectThatYouWantToReturn>.WithSuccess(message, new ObjectThatYouWantToReturn());
+```
+
+error use case output
+```csharp
+var output = Output<ObjectThatYouWantToReturn>.WithError(errorMessage);
+```
+
+error object use case output
+```csharp
+var output = Output<ObjectThatYouWantToReturn>.WithError(new Error(ErrorType.ExternalServiceUnavailable, errorMessage));
+```
+
 ## Contribution
 
 If you would like to contribute to this project, follow these steps:
 
 2. Create a branch for your changes (`git checkout -b feature/MyFeature`)
-3. Commit your changes (`git commit -am 'Add a feature'`)
+3. Commit your changes (`git commit -am 'feat: add a feature'`)
 4. Push to the branch (`git push origin feature/MyFeature`)
 5. Open a Pull Request
 

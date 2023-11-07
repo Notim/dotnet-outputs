@@ -4,7 +4,7 @@ using Notim.Outputs;
 using Notim.Outputs.Exceptions;
 using Xunit;
 
-namespace Output.UnitTests;
+namespace Outputs.UnitTests;
 
 public class OutputTests
 {
@@ -210,5 +210,64 @@ public class OutputTests
         // Assert
         action.Should().Throw<ResultNullException>();
     }
+    
+    [Fact]
+    public void StaticBuildSuccess_ShouldInitializeProperly()
+    {
+        var message = "use case success";
+        
+        // Arrange
+        var output = Output<bool>.WithSuccess(message, true);
 
+        // Act
+
+        // Assert
+        output.IsValid.Should().BeTrue();
+        output.Error.Should().BeNull();
+        output.Messages.Should().Contain(message);
+        output.ErrorMessages.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void StaticBuildError_ShouldInitializeProperly()
+    {
+        var message = "use case error";
+        
+        // Arrange
+        var output = Output<bool>.WithError(message);
+
+        // Act
+
+        // Assert
+        output.IsValid.Should().BeFalse();
+        output.Error?.ErrorMessage.Should().Be(message);
+        output.Error?.ErrorType.Should().Be(ErrorType.GenericError);
+        output.Messages.Should().BeEmpty();
+        output.ErrorMessages.Should().Contain(message);
+    }
+
+    [Theory]
+    [InlineData(ErrorType.GenericError)]
+    [InlineData(ErrorType.InvalidInput)]
+    [InlineData(ErrorType.Duplicity)]
+    [InlineData(ErrorType.ExternalServiceUnavailable)]
+    [InlineData(ErrorType.ResourceNotFound)]
+    public void StaticBuildErrorObject_ShouldInitializeProperly(ErrorType errorType)
+    {
+        var message = "use case error invalid data";
+        
+        // Arrange
+        var output = Output<bool>.WithError(new Error(errorType, message));
+
+        // Act
+
+        // Assert
+        output.IsValid.Should().BeFalse();
+        output.Error?.ErrorMessage.Should().Be(message);
+        output.Error?.ErrorType.Should().Be(errorType);
+        output.Messages.Should().BeEmpty();
+        output.ErrorMessages.Should().Contain(message);
+    }
+
+    
 }

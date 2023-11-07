@@ -9,7 +9,7 @@ public readonly struct Error : IEquatable<Error>
 
     public Error(ErrorType errorType, string errorMessage)
     {
-        ErrorType    = errorType;
+        ErrorType = errorType;
         ErrorMessage = errorMessage;
     }
 
