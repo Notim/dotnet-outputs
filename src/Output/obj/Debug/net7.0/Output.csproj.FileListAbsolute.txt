@@ -1,0 +1,12 @@
+/home/joaovitorpaulinomartins/Projects/Output/Output/Output/bin/Debug/net7.0/Output.deps.json
+/home/joaovitorpaulinomartins/Projects/Output/Output/Output/bin/Debug/net7.0/Output.dll
+/home/joaovitorpaulinomartins/Projects/Output/Output/Output/bin/Debug/net7.0/Output.pdb
+/home/joaovitorpaulinomartins/Projects/Output/Output/Output/obj/Debug/net7.0/Output.csproj.AssemblyReference.cache
+/home/joaovitorpaulinomartins/Projects/Output/Output/Output/obj/Debug/net7.0/Output.GeneratedMSBuildEditorConfig.editorconfig
+/home/joaovitorpaulinomartins/Projects/Output/Output/Output/obj/Debug/net7.0/Output.AssemblyInfoInputs.cache
+/home/joaovitorpaulinomartins/Projects/Output/Output/Output/obj/Debug/net7.0/Output.AssemblyInfo.cs
+/home/joaovitorpaulinomartins/Projects/Output/Output/Output/obj/Debug/net7.0/Output.csproj.CoreCompileInputs.cache
+/home/joaovitorpaulinomartins/Projects/Output/Output/Output/obj/Debug/net7.0/Output.dll
+/home/joaovitorpaulinomartins/Projects/Output/Output/Output/obj/Debug/net7.0/refint/Output.dll
+/home/joaovitorpaulinomartins/Projects/Output/Output/Output/obj/Debug/net7.0/Output.pdb
+/home/joaovitorpaulinomartins/Projects/Output/Output/Output/obj/Debug/net7.0/ref/Output.dll

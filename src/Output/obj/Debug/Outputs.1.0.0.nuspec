@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Outputs</id>
+    <version>1.0.0</version>
+    <title>Outputs</title>
+    <authors>Notim</authors>
+    <description>basic wrapper to use case Outputs response</description>
+    <tags>wrapper, UseCase, Outputs</tags>
+    <repository type="Github" url="https://github.com/Notim/dotnet-outputs" />
+    <dependencies>
+      <group targetFramework="net7.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="/home/joaovitorpaulinomartins/Projects/Output/Output/Output/bin/Debug/net7.0/Output.dll" target="lib/net7.0/Output.dll" />
+  </files>
+</package>
