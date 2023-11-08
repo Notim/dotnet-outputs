@@ -5,9 +5,43 @@ namespace Notim.Outputs;
 /// </summary>
 public enum ErrorType
 {
-    InvalidInput,               // 422, 400           - not retryable
-    Duplicity,                  // 409                - not retryable
-    ExternalServiceUnavailable, // 502, 503           - retryable
-    ResourceNotFound,           // 404, 204           - retryable / not retryable (Depends of implementation)
-    GenericError                // 400, 502, 503, 504 - retryable
+    /// <summary>
+    /// Error when received data is invalid
+    /// Status code similar: 422, 400
+    /// Events retryable: not retryable
+    /// </summary>
+    InvalidInput,
+    /// <summary>
+    /// Error when you try to include data but is already inserted before
+    /// Status code similar: 409
+    /// Events retryable: not retryable
+    /// </summary>
+    Duplicity,
+    
+    /// <summary>
+    /// Status code similar: 502, 503
+    /// Events retryable: retryable
+    /// </summary>
+    ExternalServiceUnavailable,
+    
+    /// <summary>
+    /// When the data search cannot be find
+    /// Status code similar: 404, 204
+    /// Events retryable: retryable / not retryable (Depends of implementation)
+    /// </summary>
+    ResourceNotFound,
+    
+    /// <summary>
+    /// When the received data cannot be process cause business rules is not valid
+    /// Status code similar: 400
+    /// Events retryable: not retryable
+    /// </summary>
+    OperationInvalid,
+    
+    /// <summary>
+    /// When processing has a not mapped problem (Exceptions thrown)
+    /// Status code similar: 400, 502, 503, 504
+    /// Events retryable: retryable / not retryable (Depends of implementation)
+    /// </summary>
+    GenericError
 }

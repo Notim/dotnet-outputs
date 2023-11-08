@@ -9,13 +9,13 @@ public readonly struct Error : IEquatable<Error>
 
     public Error(ErrorType errorType, string errorMessage)
     {
-        ErrorType = errorType;
+        ErrorType    = errorType;
         ErrorMessage = errorMessage;
     }
 
     public Error(string errorMessage)
     {
-        ErrorType = ErrorType.GenericError;
+        ErrorType    = ErrorType.GenericError;
         ErrorMessage = errorMessage;
     }
 

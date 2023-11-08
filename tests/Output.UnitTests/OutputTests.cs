@@ -252,6 +252,7 @@ public class OutputTests
     [InlineData(ErrorType.Duplicity)]
     [InlineData(ErrorType.ExternalServiceUnavailable)]
     [InlineData(ErrorType.ResourceNotFound)]
+    [InlineData(ErrorType.OperationInvalid)]
     public void StaticBuildErrorObject_ShouldInitializeProperly(ErrorType errorType)
     {
         var message = "use case error invalid data";
@@ -269,5 +270,4 @@ public class OutputTests
         output.ErrorMessages.Should().Contain(message);
     }
 
-    
 }
