@@ -13,11 +13,11 @@
         <RootNamespace>Notim.Outputs.FluentValidation</RootNamespace>
         <TargetFrameworks>net7.0;net6.0;net5.0;netstandard2.1</TargetFrameworks>
         <LangVersion>default</LangVersion>
-        <Version>2.0.2</Version>
+        <Version>2.0.3</Version>
         <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="FluentValidation" Version="8.0.0"/>
+        <PackageReference Include="FluentValidation" Version="11.3.0" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Output\Output.csproj"/>
