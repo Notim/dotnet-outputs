@@ -7,7 +7,7 @@ public class Output
 {
 
     private readonly List<string> _messages;
-    private readonly List<string> _errorMessages;
+    private readonly List<string> _FaultMessages;
 
     /// <summary>
     /// public Messages to serialize
@@ -15,17 +15,17 @@ public class Output
     public IReadOnlyCollection<string> Messages => _messages.AsReadOnly();
 
     /// <summary>
-    /// public ErrorMessages to serialize
+    /// public FaultMessages to serialize
     /// </summary>
-    public IReadOnlyCollection<string> ErrorMessages => _errorMessages.AsReadOnly();
+    public IReadOnlyCollection<string> FaultMessages => _FaultMessages.AsReadOnly();
 
     /// <summary>
-    /// Error detailed
+    /// Fault detailed
     /// </summary>
-    public Fault? Error { get; private set; }
+    public Fault? Fault { get; private set; }
 
     /// <summary>
-    /// this field is fulled depending if this have any error or message error
+    /// this field is fulled depending if this have any Fault or message Fault
     /// </summary>
     public bool IsValid { get; private set; }
 
@@ -34,48 +34,48 @@ public class Output
     /// </summary>
     public Output()
     {
-        IsValid        = true;
-        _messages      = new List<string>();
-        _errorMessages = new List<string>();
+        IsValid = true;
+        _messages = new List<string>();
+        _FaultMessages = new List<string>();
     }
 
     /// <summary>
-    /// Adding a Error type with more details
+    /// Adding a Fault type with more details
     /// </summary>
-    /// <param name="fault">Error with error type with more details</param>
-    public void AddError(Fault fault)
+    /// <param name="fault">Fault with Fault type with more details</param>
+    public void AddFault(Fault fault)
     {
-        AddErrorMessages(fault.ErrorMessage.Split(","));
-        Error = fault;
+        AddFaultMessages(fault.ErrorMessage.Split(","));
+        Fault = fault;
 
         VerifyValidity();
     }
 
     /// <summary>
-    /// Adding a single error message
+    /// Adding a single Fault message
     /// </summary>
-    /// <param name="message">error message</param>
-    public void AddErrorMessage(string message)
+    /// <param name="message">Fault message</param>
+    public void AddFaultMessage(string message)
     {
-        AddErrorMessages(message);
-        Error = new Fault(message);
+        AddFaultMessages(message);
+        Fault = new Fault(message);
 
         VerifyValidity();
     }
 
     /// <summary>
-    /// Adding list of error messages 
+    /// Adding list of Fault messages 
     /// </summary>
-    /// <param name="messages">error message list</param>
-    /// <exception cref="ErrorMessageNullOrEmptyException"></exception>
-    public void AddErrorMessages(params string[] messages)
+    /// <param name="messages">Fault message list</param>
+    /// <exception cref="FaultMessageNullOrEmptyException"></exception>
+    public void AddFaultMessages(params string[] messages)
     {
-        Error = new Fault(string.Join(", ", messages));
+        Fault = new Fault(string.Join(", ", messages));
         foreach (var message in messages) {
             if (string.IsNullOrEmpty(message))
                 throw new ErrorMessageNullOrEmptyException(OutputConstants.ErrorMessageIsNullOrEmptyMessage);
 
-            _errorMessages.Add(message);
+            _FaultMessages.Add(message);
         }
 
         VerifyValidity();
@@ -108,12 +108,12 @@ public class Output
     public string FormatMessages() => string.Join(" | ", _messages);
 
     /// <summary>
-    /// Print error messages to Logging
+    /// Print Fault messages to Logging
     /// </summary>
-    /// <returns>formatted error with pipe | separation</returns>
-    public string FormatErrorMessages() => string.Join(" | ", _errorMessages);
+    /// <returns>formatted Fault with pipe | separation</returns>
+    public string FormatFaultMessages() => string.Join(" | ", _FaultMessages);
 
-    private void VerifyValidity() => IsValid = ErrorMessages.Count == 0;
+    private void VerifyValidity() => IsValid = FaultMessages.Count == 0;
 
 }
 
@@ -178,27 +178,27 @@ public class Output<T> : Output
     }
 
     /// <summary>
-    /// Build a Output with error message
+    /// Build a Output with Fault message
     /// </summary>
-    /// <param name="errorMessage"></param>
+    /// <param name="FaultMessage"></param>
     /// <returns>Output build</returns>
-    public static Output<T> WithError(string errorMessage)
+    public static Output<T> WithFault(string FaultMessage)
     {
         var outputBuild = new Output<T>();
-        outputBuild.AddErrorMessage(errorMessage);
+        outputBuild.AddFaultMessage(FaultMessage);
 
         return outputBuild;
     }
 
     /// <summary>
-    /// Build a Output with Error
+    /// Build a Output with Fault
     /// </summary>
     /// <param name="fault"></param>
     /// <returns>Output build</returns>
-    public static Output<T> WithError(Fault fault)
+    public static Output<T> WithFault(Fault fault)
     {
         var outputBuild = new Output<T>();
-        outputBuild.AddError(fault);
+        outputBuild.AddFault(fault);
 
         return outputBuild;
     }

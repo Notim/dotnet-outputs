@@ -20,9 +20,9 @@ public class OutputTests
 
         // Assert
         output.IsValid.Should().BeTrue();
-        output.Error.Should().BeNull();
+        output.Fault.Should().BeNull();
         output.Messages.Should().BeEmpty();
-        output.ErrorMessages.Should().BeEmpty();
+        output.FaultMessages.Should().BeEmpty();
     }
 
     [Fact]
@@ -38,8 +38,8 @@ public class OutputTests
 
         // Assert
         output.IsValid.Should().BeTrue();
-        output.Error.Should().BeNull();
-        output.ErrorMessages.Should().BeEmpty();
+        output.Fault.Should().BeNull();
+        output.FaultMessages.Should().BeEmpty();
         output.Result.Should().Be(result);
     }
     
@@ -51,12 +51,12 @@ public class OutputTests
         var errorMessage = _faker.Random.Word();
 
         // Act
-        output.AddErrorMessage(errorMessage);
+        output.AddFaultMessage(errorMessage);
 
         // Assert
         output.IsValid.Should().BeFalse();
-        output.Error.Should().NotBeNull();
-        output.ErrorMessages.Should().ContainSingle().And.Contain(errorMessage);
+        output.Fault.Should().NotBeNull();
+        output.FaultMessages.Should().ContainSingle().And.Contain(errorMessage);
         output.Messages.Should().BeEmpty();
     }
 
@@ -68,12 +68,12 @@ public class OutputTests
         var error = new Fault("Custom error message");
 
         // Act
-        output.AddError(error);
+        output.AddFault(error);
 
         // Assert
         output.IsValid.Should().BeFalse();
-        output.Error.Should().NotBeNull();
-        output.ErrorMessages.Should().ContainSingle().And.Contain(error.ErrorMessage);
+        output.Fault.Should().NotBeNull();
+        output.FaultMessages.Should().ContainSingle().And.Contain(error.ErrorMessage);
         output.Messages.Should().BeEmpty();
     }
 
@@ -85,12 +85,12 @@ public class OutputTests
         var errorMessages = _faker.Random.WordsArray(3);
 
         // Act
-        output.AddErrorMessages(errorMessages);
+        output.AddFaultMessages(errorMessages);
 
         // Assert
         output.IsValid.Should().BeFalse();
-        output.Error.Should().NotBeNull();
-        output.ErrorMessages.Should().Contain(errorMessages);
+        output.Fault.Should().NotBeNull();
+        output.FaultMessages.Should().Contain(errorMessages);
         output.Messages.Should().BeEmpty();
     }
 
@@ -106,9 +106,9 @@ public class OutputTests
 
         // Assert
         output.IsValid.Should().BeTrue();
-        output.Error.Should().BeNull();
+        output.Fault.Should().BeNull();
         output.Messages.Should().ContainSingle().And.Contain(message);
-        output.ErrorMessages.Should().BeEmpty();
+        output.FaultMessages.Should().BeEmpty();
     }
 
     [Fact]
@@ -123,9 +123,9 @@ public class OutputTests
 
         // Assert
         output.IsValid.Should().BeTrue();
-        output.Error.Should().BeNull();
+        output.Fault.Should().BeNull();
         output.Messages.Should().Contain(messages);
-        output.ErrorMessages.Should().BeEmpty();
+        output.FaultMessages.Should().BeEmpty();
     }
     
     [Fact]
@@ -153,7 +153,7 @@ public class OutputTests
         // Act
         var action = () =>
         {
-            output.AddErrorMessages(new string[]{null});
+            output.AddFaultMessages(new string[]{null});
         };
         
         // Assert
@@ -167,10 +167,10 @@ public class OutputTests
         // Arrange
         var output = new Output<string>();
         var errorMessages = _faker.Random.WordsArray(3);
-        output.AddErrorMessages(errorMessages);
+        output.AddFaultMessages(errorMessages);
 
         // Act
-        var formattedErrorMessages = output.FormatErrorMessages();
+        var formattedErrorMessages = output.FormatFaultMessages();
 
         // Assert
         formattedErrorMessages.Should().Be(string.Join(" | ", errorMessages));
@@ -221,9 +221,9 @@ public class OutputTests
 
         // Assert
         output.IsValid.Should().BeTrue();
-        output.Error.Should().BeNull();
+        output.Fault.Should().BeNull();
         output.Messages.Should().Contain(message);
-        output.ErrorMessages.Should().BeEmpty();
+        output.FaultMessages.Should().BeEmpty();
     }
 
     [Fact]
@@ -232,16 +232,17 @@ public class OutputTests
         var message = "use case error";
         
         // Arrange
-        var output = Output<bool>.WithError(message);
+        var output = Output<bool>.WithFault(message);
 
         // Act
 
         // Assert
         output.IsValid.Should().BeFalse();
-        output.Error?.ErrorMessage.Should().Be(message);
-        output.Error?.FaultType.Should().Be(FaultType.GenericError.ToString());
+        output.Fault?.ErrorMessage.Should().Be(message);
+        output.Fault?.FaultType.Should().Be(FaultType.GenericError);
+        output.Fault?.FaultTypeDescription.Should().Be(FaultType.GenericError.ToString());
         output.Messages.Should().BeEmpty();
-        output.ErrorMessages.Should().Contain(message);
+        output.FaultMessages.Should().Contain(message);
     }
 
     [Theory]
@@ -256,16 +257,17 @@ public class OutputTests
         var message = "use case error invalid data";
         
         // Arrange
-        var output = Output<bool>.WithError(new Fault(faultType, message));
+        var output = Output<bool>.WithFault(new Fault(faultType, message));
 
         // Act
 
         // Assert
         output.IsValid.Should().BeFalse();
-        output.Error?.ErrorMessage.Should().Be(message);
-        output.Error?.FaultType.Should().Be(faultType.ToString());
+        output.Fault?.ErrorMessage.Should().Be(message);
+        output.Fault?.FaultType.Should().Be(faultType);
+        output.Fault?.FaultTypeDescription.Should().Be(faultType.ToString());
         output.Messages.Should().BeEmpty();
-        output.ErrorMessages.Should().Contain(message);
+        output.FaultMessages.Should().Contain(message);
     }
 
 }

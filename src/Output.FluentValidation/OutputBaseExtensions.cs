@@ -7,17 +7,17 @@ namespace Notim.Outputs.FluentValidation;
 public static class OutputBaseExtensions
 {
     
-    public static void AddValidationResult<T>(this Output<T> output, ValidationResult validationResult)
+    public static void AddValidationResult(this Output output, ValidationResult validationResult)
     {
         if (validationResult is null)
             throw new ValidationResultNullException(message: OutputConstants.ValidationResultNullMessage);
         
         var errors = validationResult.Errors.Select<ValidationFailure, string>(e => $"{e.PropertyName} => {e.ErrorMessage}").ToList<string>();
         
-        output.AddError(new Fault(FaultType.InvalidInput, string.Join(",", errors)));
+        output.AddFault(new Fault(FaultType.InvalidInput, string.Join(",", errors)));
     }
     
-    public static void AddValidationResults<T>(this Output<T> output, params ValidationResult[] validationResults)
+    public static void AddValidationResults(this Output output, params ValidationResult[] validationResults)
     {
         foreach (var validationResult in validationResults)
         {

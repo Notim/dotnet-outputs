@@ -10,16 +10,17 @@ you can use in your project by [nuget.org](https://www.nuget.org/packages/Notim.
 
 ### you can install with nuget package manager
 ```shell
-dotnet add package Notim.Outputs --version 2.0.1
+dotnet add package Notim.Outputs --version 3.0.0
 ```
+
 ### Simple Usage
 the usage is very simple, you only need to instace Output with classe that you need to transport.
 
 ```csharp
 var output = new Output<ClassThatYouNeedToTransport>();
 
-if (something is notGood) {
-  output.AddErrorMessage("something is not good");
+if (something is not Good) {
+  output.AddFaultMessage("something is not good");
 }
 else{
   output.AddMessage("Success");
@@ -29,23 +30,23 @@ else{
 return output;
 ```
 
-### Errors treatment by error type
-you have the functionality to determine the error type to filter if you want to return a especific status code or retries on your topic consumers
+### Faults treatment by Fault type
+you have the functionality to determine the Fault type to filter if you want to return a especific status code or retries on your topic consumers
 
 ```csharp
 var output = new Output<ClassThatYouNeedToTransport>();
 
-if (something is notGood && externalServiceIsOffline)
+if (something is not Good && externalServiceIsOffline)
 {
-  output.AddError(new Error(ErrorType.ExternalServiceUnavailable, "customer service is down"));
+  output.AddFault(new Fault(FaultType.ExternalServiceUnavailable, "customer service is down"));
 }
-else if (something is notGood && cannotFindResultOnDatabase)
+else if (something is not Good && cannotFindResultOnDatabase)
 {
-  output.AddError(new Error(ErrorType.ResourceNotFound, "the user with id xxx cannot be find"));
+  output.AddFault(new Fault(FaultType.ResourceNotFound, "the user with id xxx cannot be find"));
 }
-else if (something is notGood && invalidInputReceived)
+else if (something is not Good && invalidInputReceived)
 {
-  output.AddError(new Error(ErrorType.InvalidInput, "invalid fields"));
+  output.AddFault(new Fault(FaultType.InvalidInput, "invalid fields"));
 }
 else
 {
@@ -56,54 +57,72 @@ else
 return output;
 ```
 
-controller using "use case" pattern:
+Asp .Net WebApi Controller using "use case" pattern example:
 
 ```csharp
 [HttpGet("/")]
 public async Task<IActionResult> GetOrder(ClassThatYouReceiveDataInput input, CancelationToken cancelationToken)
 
-  Output<ClassThatYouNeedToTransport> output = await _findUserByIdUseCase.Handle(input, cancelationToken);
-  
-  if (!output.IsValid && output.Error.ErrorType is ErrorType.ExternalServiceUnavailable)
-    return BadGateway(output.ErrorMessages);
-  
-  if (!output.IsValid && output.Error.ErrorType is ErrorType.ResourceNotFound)
-    return NotFound(output.ErrorMessages);
-
-  if (!output.IsValid && output.Error.ErrorType is ErrorType.InvalidInput)
-    return UnprocessableEntity(output.ErrorMessages);
-  
-  return Ok(output.GetResult());
+    Output<ClassThatYouNeedToTransport> output = await _findUserByIdUseCase.Handle(input, cancelationToken);
+    
+    if (!output.IsValid && output.Fault?.FaultType  is FaultType.ExternalServiceUnavailable)
+        return BadGateway(output.Fault);
+    
+    if (!output.IsValid && output.Fault?.FaultType is FaultType.ResourceNotFound)
+        return NotFound(output.Fault);
+    
+    if (!output.IsValid && output.Fault?.FaultType is FaultType.InvalidInput)
+        return UnprocessableEntity(output.Fault);
+    
+    if (!output.IsValid && output.Fault?.FaultType is FaultType.InvalidOperation)
+        return UnprocessableEntity(output.Fault);
+    
+    return Ok(output.GetResult());
 }
 ```
 
 ### Single Line Fluent Form to build Output
-After version 2 you can use the single line Build Form to create Output
+#### After version 2 you can use the single line Build Form to create Output
 
 success use case output
 ```csharp
 var output = Output<ClassThatYouNeedToTransport>.WithSuccess("use case finished with success", new ClassThatYouNeedToTransport());
 ```
 
-error use case output
+Fault use case output
 ```csharp
-var output = Output<ClassThatYouNeedToTransport>.WithError("An error was ocurred");
+var output = Output<ClassThatYouNeedToTransport>.WithFault("An Fault was ocurred");
 ```
 
-error object use case output
+Fault object use case output
 ```csharp
-var output = Output<ClassThatYouNeedToTransport>.WithError(new Error(ErrorType.ExternalServiceUnavailable, "external service is unavaiable"));
+var output = Output<ClassThatYouNeedToTransport>.WithFault(new Fault(FaultType.ExternalServiceUnavailable, "external service is unavaiable"));
 ```
+
+### Empty body can be returned
+#### After version 3 you can use the Output with empty body to create Output
+
+```csharp
+var output = Output();
+output.AddFault("simple error");
+```
+
+```csharp
+var output = Output();
+output.AddFault(new Fault(ErrorType.ExternalServiceUnavailable), "external error");
+```
+
+
 
 # Notim.Outputs.FluentValidation
 
-you can use FluentValidation library "ValidationResult" to create an Output with ErrorType.InvalidInput, you just only need to install the extension package:
+you can use FluentValidation library "ValidationResult" to create an Output with FaultType.InvalidInput, you just only need to install the extension package:
 
 [nuget.org](https://www.nuget.org/packages/Notim.Outputs.FluentValidation/)
 
 ### you can install Notim.Outputs.FluentValidation with nuget package manager, run the command below:
 ```shell
-dotnet add package Notim.Outputs.FluentValidation --version 2.0.1
+dotnet add package Notim.Outputs.FluentValidation --version 3.0.0
 ```
 
 ### simple usage

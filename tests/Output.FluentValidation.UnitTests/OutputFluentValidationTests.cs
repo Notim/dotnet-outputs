@@ -27,9 +27,10 @@ public class OutputFluentValidationTests
         
         // Assert
         output.Result.Should().BeFalse();
-        output.Error.Should().NotBeNull();
-        output.Error?.FaultType.Should().Be(FaultType.InvalidInput.ToString());
-        output.Error?.ErrorMessage.Should().Be(string.Join(",", output.ErrorMessages));
+        output.Fault.Should().NotBeNull();
+        output.Fault?.FaultType.Should().Be(FaultType.InvalidInput);
+        output.Fault?.FaultTypeDescription.Should().Be(FaultType.InvalidInput.ToString());
+        output.Fault?.ErrorMessage.Should().Be(string.Join(",", output.FaultMessages));
     }
     
     [Fact]
@@ -53,9 +54,10 @@ public class OutputFluentValidationTests
         
         // Assert
         output.Result.Should().BeFalse();
-        output.Error.Should().NotBeNull();
-        output.Error?.FaultType.Should().Be(FaultType.InvalidInput.ToString());
-        output.Error?.ErrorMessage.Should().Be(string.Join(",", output.ErrorMessages));
+        output.Fault.Should().NotBeNull();
+        output.Fault?.FaultType.Should().Be(FaultType.InvalidInput);
+        output.Fault?.FaultTypeDescription.Should().Be(FaultType.InvalidInput.ToString());
+        output.Fault?.ErrorMessage.Should().Be(string.Join(",", output.FaultMessages));
     }
     
     [Fact]
@@ -83,8 +85,9 @@ public class OutputFluentValidationTests
         
         // Assert
         output.Result.Should().BeFalse();
-        output.Error.Should().NotBeNull();
-        output.Error?.FaultType.Should().Be(FaultType.InvalidInput.ToString());
+        output.Fault.Should().NotBeNull();
+        output.Fault?.FaultType.Should().Be(FaultType.InvalidInput);
+        output.Fault?.FaultTypeDescription.Should().Be(FaultType.InvalidInput.ToString());
     }
     
     

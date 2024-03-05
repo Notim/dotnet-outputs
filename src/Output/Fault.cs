@@ -9,19 +9,19 @@ public readonly struct Fault : IEquatable<Fault>
 
     public Fault(FaultType faultType, string errorMessage)
     {
-        _faultType = faultType;
+        FaultType = faultType;
         ErrorMessage = errorMessage;
     }
 
     public Fault(string errorMessage)
     {
-        _faultType   = Notim.Outputs.FaultType.GenericError;
+        FaultType = Notim.Outputs.FaultType.GenericError;
         ErrorMessage = errorMessage;
     }
 
-    private readonly FaultType _faultType;
+    public FaultType FaultType { get; }
 
-    public string FaultType => _faultType.ToString();
+    public string FaultTypeDescription => FaultType.ToString();
 
     public string ErrorMessage { get; }
 
