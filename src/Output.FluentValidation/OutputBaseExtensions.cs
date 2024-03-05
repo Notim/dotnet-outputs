@@ -14,7 +14,7 @@ public static class OutputBaseExtensions
         
         var errors = validationResult.Errors.Select<ValidationFailure, string>(e => $"{e.PropertyName} => {e.ErrorMessage}").ToList<string>();
         
-        output.AddError(new Error(ErrorType.InvalidInput, string.Join(",", errors)));
+        output.AddError(new Fault(FaultType.InvalidInput, string.Join(",", errors)));
     }
     
     public static void AddValidationResults<T>(this Output<T> output, params ValidationResult[] validationResults)

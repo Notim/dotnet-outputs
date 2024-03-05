@@ -8,9 +8,7 @@ namespace Outputs.UnitTests;
 
 public class OutputTests
 {
-    private readonly Faker _faker;
-
-    public OutputTests() => _faker = new Faker();
+    private readonly Faker _faker = new();
 
     [Fact]
     public void Constructor_Default_ShouldInitializeProperly()
@@ -67,7 +65,7 @@ public class OutputTests
     {
         // Arrange
         var output = new Output<string>();
-        var error = new Error("Custom error message");
+        var error = new Fault("Custom error message");
 
         // Act
         output.AddError(error);
@@ -241,31 +239,31 @@ public class OutputTests
         // Assert
         output.IsValid.Should().BeFalse();
         output.Error?.ErrorMessage.Should().Be(message);
-        output.Error?.ErrorType.Should().Be(ErrorType.GenericError);
+        output.Error?.FaultType.Should().Be(FaultType.GenericError.ToString());
         output.Messages.Should().BeEmpty();
         output.ErrorMessages.Should().Contain(message);
     }
 
     [Theory]
-    [InlineData(ErrorType.GenericError)]
-    [InlineData(ErrorType.InvalidInput)]
-    [InlineData(ErrorType.Duplicity)]
-    [InlineData(ErrorType.ExternalServiceUnavailable)]
-    [InlineData(ErrorType.ResourceNotFound)]
-    [InlineData(ErrorType.OperationInvalid)]
-    public void StaticBuildErrorObject_ShouldInitializeProperly(ErrorType errorType)
+    [InlineData(FaultType.GenericError)]
+    [InlineData(FaultType.InvalidInput)]
+    [InlineData(FaultType.Duplicity)]
+    [InlineData(FaultType.ExternalServiceUnavailable)]
+    [InlineData(FaultType.ResourceNotFound)]
+    [InlineData(FaultType.InvalidOperation)]
+    public void StaticBuildErrorObject_ShouldInitializeProperly(FaultType faultType)
     {
         var message = "use case error invalid data";
         
         // Arrange
-        var output = Output<bool>.WithError(new Error(errorType, message));
+        var output = Output<bool>.WithError(new Fault(faultType, message));
 
         // Act
 
         // Assert
         output.IsValid.Should().BeFalse();
         output.Error?.ErrorMessage.Should().Be(message);
-        output.Error?.ErrorType.Should().Be(errorType);
+        output.Error?.FaultType.Should().Be(faultType.ToString());
         output.Messages.Should().BeEmpty();
         output.ErrorMessages.Should().Contain(message);
     }

@@ -3,13 +3,12 @@ using Notim.Outputs.Exceptions;
 
 namespace Notim.Outputs;
 
-public class Output<T>
+public class Output
 {
 
     private readonly List<string> _messages;
     private readonly List<string> _errorMessages;
-    private T _result;
-    
+
     /// <summary>
     /// public Messages to serialize
     /// </summary>
@@ -23,7 +22,7 @@ public class Output<T>
     /// <summary>
     /// Error detailed
     /// </summary>
-    public Error? Error { get; private set; }
+    public Fault? Error { get; private set; }
 
     /// <summary>
     /// this field is fulled depending if this have any error or message error
@@ -31,41 +30,23 @@ public class Output<T>
     public bool IsValid { get; private set; }
 
     /// <summary>
-    /// public Result to serializer
-    /// </summary>
-    public T Result => GetResult();
-
-    /// <summary>
     /// default constructor
     /// </summary>
     public Output()
     {
-        IsValid = true;
-        _messages = new List<string>();
+        IsValid        = true;
+        _messages      = new List<string>();
         _errorMessages = new List<string>();
-        _result = default(T);
     }
 
     /// <summary>
-    /// Constructor to use Output with definitive Payload 
-    /// </summary>
-    /// <param name="result">generic T payload</param>
-    public Output(object result)
-    {
-        IsValid = true;
-        _messages = new List<string>();
-        _errorMessages = new List<string>();
-        AddResult((T) result);
-    }
-    
-    /// <summary>
     /// Adding a Error type with more details
     /// </summary>
-    /// <param name="error">Error with error type with more details</param>
-    public void AddError(Error error)
+    /// <param name="fault">Error with error type with more details</param>
+    public void AddError(Fault fault)
     {
-        AddErrorMessages(error.ErrorMessage.Split(","));
-        Error = error;
+        AddErrorMessages(fault.ErrorMessage.Split(","));
+        Error = fault;
 
         VerifyValidity();
     }
@@ -77,7 +58,7 @@ public class Output<T>
     public void AddErrorMessage(string message)
     {
         AddErrorMessages(message);
-        Error = new Error(message);
+        Error = new Fault(message);
 
         VerifyValidity();
     }
@@ -89,9 +70,8 @@ public class Output<T>
     /// <exception cref="ErrorMessageNullOrEmptyException"></exception>
     public void AddErrorMessages(params string[] messages)
     {
-        Error = new Error(string.Join(", ", messages));
-        foreach (var message in messages)
-        {
+        Error = new Fault(string.Join(", ", messages));
+        foreach (var message in messages) {
             if (string.IsNullOrEmpty(message))
                 throw new ErrorMessageNullOrEmptyException(OutputConstants.ErrorMessageIsNullOrEmptyMessage);
 
@@ -114,8 +94,7 @@ public class Output<T>
     /// <exception cref="MessageNullOrEmptyException"></exception>
     public void AddMessages(params string[] messages)
     {
-        foreach (var message in messages)
-        {
+        foreach (var message in messages) {
             if (string.IsNullOrEmpty(message))
                 throw new MessageNullOrEmptyException(OutputConstants.MessageIsNullOrEmptyMessage);
             _messages.Add(message);
@@ -127,12 +106,43 @@ public class Output<T>
     /// </summary>
     /// <returns>formatted success messages with pipe</returns>
     public string FormatMessages() => string.Join(" | ", _messages);
-    
+
     /// <summary>
     /// Print error messages to Logging
     /// </summary>
     /// <returns>formatted error with pipe | separation</returns>
     public string FormatErrorMessages() => string.Join(" | ", _errorMessages);
+
+    private void VerifyValidity() => IsValid = ErrorMessages.Count == 0;
+
+}
+
+public class Output<T> : Output
+{
+
+    private T _result;
+
+    /// <summary>
+    /// public Result to serializer
+    /// </summary>
+    public T Result => GetResult();
+
+    /// <summary>
+    /// default constructor
+    /// </summary>
+    public Output() : base()
+    {
+        _result = default(T);
+    }
+
+    /// <summary>
+    /// Constructor to use Output with definitive Payload 
+    /// </summary>
+    /// <param name="result">generic T payload</param>
+    public Output(object result)
+    {
+        AddResult((T) result);
+    }
 
     /// <summary>
     /// Add payload result 
@@ -146,7 +156,7 @@ public class Output<T>
 
         _result = result;
     }
-    
+
     /// <summary>
     /// Get Result Payload
     /// </summary>
@@ -176,23 +186,21 @@ public class Output<T>
     {
         var outputBuild = new Output<T>();
         outputBuild.AddErrorMessage(errorMessage);
-        
+
         return outputBuild;
     }
-    
+
     /// <summary>
     /// Build a Output with Error
     /// </summary>
-    /// <param name="error"></param>
+    /// <param name="fault"></param>
     /// <returns>Output build</returns>
-    public static Output<T> WithError(Error error)
+    public static Output<T> WithError(Fault fault)
     {
         var outputBuild = new Output<T>();
-        outputBuild.AddError(error);
-        
+        outputBuild.AddError(fault);
+
         return outputBuild;
     }
-    
-    private void VerifyValidity() => IsValid = ErrorMessages.Count == 0;
 
 }
