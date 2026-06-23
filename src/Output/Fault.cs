@@ -15,7 +15,7 @@ public readonly struct Fault : IEquatable<Fault>
 
     public Fault(string errorMessage)
     {
-        FaultType = Notim.Outputs.FaultType.GenericError;
+        FaultType = FaultType.GenericError;
         ErrorMessage = errorMessage;
     }
 
