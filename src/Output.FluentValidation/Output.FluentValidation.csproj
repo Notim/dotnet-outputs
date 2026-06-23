@@ -11,7 +11,7 @@
         <PackageTags>wrapper, UseCase, Outputs</PackageTags>
         <AssemblyName>Notim.Outputs.FluentValidation</AssemblyName>
         <RootNamespace>Notim.Outputs.FluentValidation</RootNamespace>
-        <TargetFrameworks>net5.0;net6.0;net7.0;netstandard2.1;net8.0</TargetFrameworks>
+        <TargetFrameworks>net5.0;net6.0;net7.0;net8.0;netstandard2.1;net10.0</TargetFrameworks>
         <LangVersion>default</LangVersion>
         <Version>3.0.0</Version>
         <PackageIcon>icon.png</PackageIcon>

@@ -252,16 +252,18 @@ public class OutputTests
     [InlineData(FaultType.ExternalServiceUnavailable)]
     [InlineData(FaultType.ResourceNotFound)]
     [InlineData(FaultType.InvalidOperation)]
+    [InlineData(FaultType.Unauthorized)]
+    [InlineData(FaultType.Forbidden)]
+    [InlineData(FaultType.Conflict)]
+    [InlineData(FaultType.PreconditionFailed)]
+    [InlineData(FaultType.LimitExceeded)]
+    [InlineData(FaultType.PaymentRequired)]
     public void StaticBuildErrorObject_ShouldInitializeProperly(FaultType faultType)
     {
         var message = "use case error invalid data";
-        
-        // Arrange
+
         var output = Output<bool>.WithFault(new Fault(faultType, message));
 
-        // Act
-
-        // Assert
         output.IsValid.Should().BeFalse();
         output.Fault?.ErrorMessage.Should().Be(message);
         output.Fault?.FaultType.Should().Be(faultType);
